@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>ICT 10 PYTHON</title>
+
+   <style>
+       body {
+           margin: 0;
+           font-family: 'Segoe UI', sans-serif;
+       }
+       body::before { /* uses important in order to show up */
+            content: ""; /* uses important in order to show up */
+            position: fixed;
+            inset: 0; /* uses important in order to show up */
+            background-image: url("court.jpg");
+            background-size: cover; /* fills the screen, maintains aspect ratio */
+            background-position: center; /* centers the image */
+            background-repeat: no-repeat;
+
+            z-index: -1;
+        }
+       html,body{
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden !important; /* uses important in order to show up */
+       }
+       .su-form{
+            width: 500px;
+            max-width: 500px; /*to make the width size of the form 500px*/
+        }
+       .container {
+           background: rgba(255, 255, 255, 0.50); /* transparent white */
+           backdrop-filter: blur(12px);
+           padding: 30px;
+           border-radius: 15px;
+           box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+           width: 100%;
+           max-width: 555px;
+           text-align: center;
+       }
+       #random-btn { /* id name used for all buttons in the 3 pages*/
+           width: 100%;
+           padding: 12px;
+           border: none;
+           border-radius: 8px;
+           color: black;
+           font-weight: bold;
+           font-size: 16px;
+           cursor: pointer;
+           background: linear-gradient(90deg,rgba(207, 0, 0, 1) 0%, rgba(255, 234, 0, 1) 35%, rgba(99, 224, 67, 1) 65%, rgba(0, 68, 255, 1) 100%); /* code for gradient effect from css designs */
+           /* margin-bottom: 20px; */
+       }
+       #player-list {
+           text-align: left;
+           color: black;
+           line-height: 1.8;
+           padding-left: 20%; /* centers the list similar to the screenshot */
+        }
+        .navbar {
+            background: black !important; /* uses important in order to show up */
+            position: fixed; /* makes sure navbar remains visible even when scrolling */
+            width: 100%;
+            z-index: 2;
+        }
+        span{
+            color: white !important; /* uses important in order to show up */
+        }
+   </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+
+    <nav class="navbar navbar-expand-lg custom-navbar px-4">
+        <div class="container-fluid">
+            <span class="navbar-brand fw-semibold">Intramurals S.Y. 2025-2026</span>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav gap-2"> <!-- gives a gap of 2 per button when displayed -->
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-outline-light fw-semibold" href="#SignUp">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-outline-light fw-semibold" href="#Checker">Team Checker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-outline-light fw-semibold" href="#Players">Players</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<div class="justify-content-center align-items-center d-flex flex-column mt-5" id="SignUp">
+
+<!-- Page 1 -->
+
+    <div class="container p-4 su-form shadow-lg mt-5">
+        <h1 class="text-center"><strong>Create Account</strong></h1>
+        <br />
+        <!-- Sign Up Form -->
+        <form>
+            <div class="mb-3">
+                <label class="form-label" for="user"><strong>Username</strong></label>
+                <input class="form-control" type="text" id="user">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="pass"><strong>Password</strong></label>
+                <input class="form-control" type="password" id="pass">
+            </div>
+            <div class="mb-3 d-grid" style="z-index: 1">
+                <button class="btn btn-dark" id="random-btn" type="button" py-click="signupcheck">Sign Up</button>
+            </div>
+        </form>
+        <!-- Result -->
+        <div class="text-center">
+            <p id="resultU"></p>
+            <p id="resultP"></p>
+        </div>
+    </div>
+
+<!-- Page 2 -->
+
+    <div id="Checker" class="container mb-5 mt-5">
+        <h1><strong>Team Checker</strong></h1>
+        <form id="intramuralsForm" class="mt-5">    
+
+            <!-- Online registration -->
+            <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
+                <label class="fw-bold">Registered online?</label>
+                <div class="form-check">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="registered"
+                        id="regYes"
+                        value="yes"
+                    />
+                    <label class="form-check-label" for="regYes">Yes</label>
+                </div>
+                <div class="form-check">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="registered"
+                        id="regNo"
+                        value="no"
+                    />
+                    <label class="form-check-label" for="regNo">No</label>
+                </div>
+            </div>
+
+            <!-- Medical clearance -->
+            <div class="d-flex justify-content-center align-items-center gap-3 mt-3">
+                <label class="fw-bold">Medical Clearance?</label>
+                <div class="form-check">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="medical"
+                        id="medYes"
+                        value="yes"
+                    />
+                    <label class="form-check-label" for="medYes">Yes</label>
+                </div>
+                <div class="form-check">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="medical"
+                        id="medNo"
+                        value="no"
+                    />
+                    <label class="form-check-label" for="medNo">No</label>
+                </div>
+            </div>
+
+            <br />
+
+            <!-- Grade level -->
+            <div class="row mt-3">
+                <div class="col-md-6">
+                <label class="fw-bold">Grade level:</label>
+                <select id="grade" class="form-select">
+                    <option value="">--Select--</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+                </div>
+
+            <!-- Section -->
+                <div class="col-md-6">
+                <label class="fw-bold">Section:</label>
+                <select id="section" class="form-select">
+                    <option value="">--Select--</option>
+                    <option value="Emerald">Emerald</option>
+                    <option value="Ruby">Ruby</option>
+                    <option value="Sapphire">Sapphire</option>
+                    <option value="Topaz">Topaz</option>
+                    <option value="Jade">Jade</option>
+                </select>
+                </div>
+            </div>
+
+            <br><br>
+
+            <!-- Button -->
+            <button type="button" py-click="check" class="btn btn-dark" id="random-btn">Check Eligibility</button>
+
+            <!-- where results will be displayed -->
+            <div class="mt-5">
+                <p id="result"></p>
+                <p id="team"></p>
+                <img id="image" src="">
+            </div>
+
+        </form>
+    </div>
+
+<!-- Page 3 -->
+
+    <div class="container mb-5" id="Players">
+        <h1><strong>Intramurals Players</strong></h1>
+        <br />
+        <button id="random-btn" py-click="reveal_list">Click here</button>
+        <br /><br />
+        <div id="player-list"></div>
+    </div>
+</div>
+
+<script type="py" src="./main.py" config='{"files": ["./main.py"]}'></script>
+
+</body>
+</html>
